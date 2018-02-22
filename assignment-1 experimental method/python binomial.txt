@@ -1,0 +1,25 @@
+import numpy as np
+import scipy, scipy.stats
+import matplotlib.pyplot as plt
+import pandas as pd
+
+def perform_bernouli_trials(num_trials, prob_success):
+    num_successes = 0
+    for i in xrange(num_trials):
+        if np.random.rand() < prob_success:
+            num_successes +=1
+            
+    return num_successes
+
+num_expts = 10 
+num_trials = 10 
+prob_success = 0.5
+
+l_num_successes = [0 for i in xrange(num_expts)]
+for i in xrange(num_expts):
+    l_num_successes[i] = perform_bernouli_trials(num_trials, prob_success)
+
+_ = plt.hist(l_num_successes, bins=11, range=(-0.5, 10.5), normed=True)
+a_possible_successes = np.linspace(0, 10, 11)
+a_prob = scipy.stats.binom.pmf(a_possible_successes, num_trials, prob_success)
+_ = plt.plot(a_possible_successes, a_prob)
